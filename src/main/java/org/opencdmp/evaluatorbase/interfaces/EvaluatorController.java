@@ -1,8 +1,8 @@
 package org.opencdmp.evaluatorbase.interfaces;
 
-import org.opencdmp.commonmodels.models.description.DescriptionModel;
-import org.opencdmp.commonmodels.models.plan.PlanModel;
-import org.opencdmp.evaluatorbase.models.misc.RankModel;
+import org.opencdmp.evaluatorbase.models.misc.DescriptionEvaluationModel;
+import org.opencdmp.evaluatorbase.models.misc.PlanEvaluationModel;
+import org.opencdmp.evaluatorbase.models.misc.RankResultModel;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public interface EvaluatorController {
 
 	@PostMapping("/rank/plan")
-	RankModel rankPlan(@RequestBody PlanModel planModel) throws Exception ;
+	RankResultModel rankPlan(@RequestBody PlanEvaluationModel planModel) throws Exception ;
 
 	@PostMapping("/rank/description")
-	RankModel rankDescription(@RequestBody DescriptionModel descriptionModel) throws Exception;
+	RankResultModel rankDescription(@RequestBody DescriptionEvaluationModel descriptionModel) throws Exception;
 
 	@GetMapping("/config")
 	EvaluatorConfiguration getConfiguration();

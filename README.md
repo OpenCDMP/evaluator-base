@@ -15,20 +15,22 @@ The **evaluator-base** package provides the necessary Java interfaces and config
 This interface defines the core operations that any evaluation service must implement.
 
 ```java
+import org.opencdmp.evaluatorbase.models.misc.DescriptionEvaluationModel;
+
 public interface EvaluatorClient {
 
-    RankModel rankPlan(PlanModel plan) throws InvalidApplicationException, IOException, InvalidTypeException;
+   RankResultModel rankPlan(PlanEvaluationModel plan) throws InvalidApplicationException, IOException, InvalidTypeException;
 
-    RankModel rankDescription(DescriptionModel description) throws InvalidApplicationException, IOException;
+   RankResultModel rankDescription(DescriptionEvaluationModel description) throws InvalidApplicationException, IOException;
 
-    EvaluatorConfiguration getConfiguration();
+   EvaluatorConfiguration getConfiguration();
 
-    String getLogo();
+   String getLogo();
 }
 ```
 
-- **rankPlan()**: Evaluates and ranks a plan, returning a **RankModel** object with the evaluation details.
-- **rankDescription()**: Evaluates and ranks a description, returning a **RankModel** object.
+- **rankPlan()**: Evaluates and ranks a plan, returning a **RankResultModel** object with the evaluation details.
+- **rankDescription()**: Evaluates and ranks a description, returning a **RankResultModel ** object.
 - **getConfiguration()**: Returns the configuration details of the evaluation service.
 - **getLogo()**: Returns the service’s logo in base64 format, if available.
 
@@ -39,12 +41,12 @@ This interface defines the API endpoints that the evaluation service must implem
 ```java
 @RequestMapping("/api/evaluator")
 public interface EvaluatorController {
+    
+   @PostMapping("/rank/plan")
+   RankResultModel rankPlan(@RequestBody PlanEvaluationModel planModel) throws Exception;
 
-    @PostMapping("/rank/plan")
-    RankModel rankPlan(@RequestBody PlanModel planModel) throws Exception;
-
-    @PostMapping("/rank/description")
-    RankModel rankDescription(@RequestBody DescriptionModel descriptionModel) throws Exception;
+   @PostMapping("/rank/description")
+   RankResultModel rankDescription(@RequestBody DescriptionEvaluationModel descriptionModel) throws Exception;
 
     @GetMapping("/config")
     EvaluatorConfiguration getConfiguration();
@@ -68,9 +70,12 @@ public class EvaluatorConfiguration {
 
     private String evaluatorId;
     private RankConfig rankConfig;
-    private List<EvaluatorEntityType> evaluatorEntityTypes;
+    private List<PluginEntityType> evaluatorEntityTypes;
     private boolean useSharedStorage;
     private boolean hasLogo;
+    private List<ConfigurationField> configurationFields;
+    private List<ConfigurationField> userConfigurationFields;
+    private List<BenchmarkConfiguration> availableBenchmarks;
 }
 ```
 
@@ -80,6 +85,9 @@ public class EvaluatorConfiguration {
 - **evaluatorEntityTypes**: Entity types the evaluator supports, such as plans or descriptions.
 - **useSharedStorage**: Indicates if shared storage is used for the evaluator.
 - **hasLogo**: Indicates if the evaluator service has a logo.
+- **configurationFields**: Fields that contain additional configuration for this evaluator.
+- **userConfigurationFields**: Fields that provide additional configuration options specific to this file transformer.
+- **availableBenchmarks**: Benchmark that can be used to add reference.
 
 ## How to Create a Custom Evaluation Service
 
