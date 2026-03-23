@@ -1,6 +1,5 @@
 package org.opencdmp.evaluatorbase.interfaces;
 
-import com.sun.jdi.InvalidTypeException;
 import org.opencdmp.commonmodels.models.description.DescriptionModel;
 import org.opencdmp.commonmodels.models.plan.PlanModel;
 import org.opencdmp.evaluatorbase.models.misc.*;
@@ -18,18 +17,16 @@ public interface EvaluatorClient {
      *
      * @param plan plan evaluation structure that contains plan model and benchmark ids (can be used for available configuration)
      * @return an object containing plan ranking level, messages and details from the result
-     * @throws Exception if an error occurs while trying to ranking and evaluate the plan
      */
-    RankResultModel rankPlan(PlanEvaluationModel plan) throws InvalidApplicationException, IOException, InvalidTypeException;
+    RankResultModel rankPlan(PlanEvaluationModel plan);
 
     /**
      * Returns an object with rank info of plan
      *
      * @param description description evaluation structure that contains description model and benchmark ids (can be used for available configuration)
      * @return an object containing description ranking level, messages and details from the result
-     * @throws Exception if an error occurs while trying to ranking and evaluate the description
      */
-    RankResultModel rankDescription(DescriptionEvaluationModel description) throws InvalidApplicationException, IOException;
+    RankResultModel rankDescription(DescriptionEvaluationModel description) ;
 
     /**
      * Returns the configuration details of the service

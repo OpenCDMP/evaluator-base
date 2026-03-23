@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public interface EvaluatorController {
 
 	@PostMapping("/rank/plan")
-	RankResultModel rankPlan(@RequestBody PlanEvaluationModel planModel) throws Exception ;
+	RankResultModel rankPlan(@RequestBody PlanEvaluationModel planModel);
 
 	@PostMapping("/rank/description")
-	RankResultModel rankDescription(@RequestBody DescriptionEvaluationModel descriptionModel) throws Exception;
+	RankResultModel rankDescription(@RequestBody DescriptionEvaluationModel descriptionModel);
 
 	@GetMapping("/config")
 	EvaluatorConfiguration getConfiguration();
